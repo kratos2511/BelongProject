@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  url: MyString
+  hacker_url: MyString
+  posted_on: 2018-07-27
+  upvotes: 1
+  comments: 1
+
+two:
+  url: MyString
+  hacker_url: MyString
+  posted_on: 2018-07-27
+  upvotes: 1
+  comments: 1
