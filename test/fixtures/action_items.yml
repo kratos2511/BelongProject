@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  item: one
+  read: false
+  deleted: false
+
+two:
+  user: two
+  item: two
+  read: false
+  deleted: false

@@ -6,7 +6,9 @@
     <ul class="nav navbar-nav">
       <li class="active"><%= link_to "Home", root_path %></li>
       <li></li>
-      <li><a href="#">Page 2</a></li>
+      <% if user_signed_in? %>
+      <li><%= link_to "News", items_path %></li>
+      <% end %>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <% if user_signed_in? %>
