@@ -1,25 +1,10 @@
 # Update Items
 #*/10 * * * * /bin/bash -l -c 'cd /Users/mazdigital/Desktop/project/BelongProject ; bundle exec rails runner -e development bin/pull_items_from_source.rb >> log/pull_items_from_source.log'
 puts "*"*100
-puts "Items fetching started at #{Time.now}"
-
-
-
-response = nil
-uri = URI("https://news.ycombinator.com/")
-
-Net::HTTP.start(uri.host, uri.port,
-  :use_ssl => uri.scheme == 'https') do |http|
-  request = Net::HTTP::Get.new uri
-
-  response = http.request request # Net::HTTPResponse object
+base_uri = "https://news.ycombinator.com/news?p="
+(1..3).each do |i| 
+  ItemParserWorker.perform_async(base_uri+i.to_s)
 end
 
-if response.class.name = "Net::HTTPOK"
-  puts "Top stories  #{Time.now}"
-else 
-  
-end
-
-puts "Feed Stores update finished at #{Time.now}"
+puts "Item update/fetch queued at #{Time.now}"
 puts "*"*100

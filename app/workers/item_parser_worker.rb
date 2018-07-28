@@ -1,7 +1,8 @@
 class ItemParserWorker
   include Sidekiq::Worker
 
-  def perform(*args)
-    # Do something
+  def perform(url)
+    puts "Accessing #{url} for new/existing items"
+    ItemCreator.parse_fetch_items(url)
   end
 end

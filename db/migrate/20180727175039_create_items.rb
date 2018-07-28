@@ -3,7 +3,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
     create_table :items do |t|
       t.string :url
       t.string :hacker_url
-      t.date :posted_on
+      t.datetime :posted_on
       t.integer :upvotes
       t.integer :comments
 

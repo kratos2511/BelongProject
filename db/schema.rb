@@ -10,17 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_27_175039) do
+ActiveRecord::Schema.define(version: 2018_07_28_092106) do
 
   create_table "items", force: :cascade do |t|
     t.string "url"
     t.string "hacker_url"
-    t.date "posted_on"
+    t.datetime "posted_on"
     t.integer "upvotes"
     t.integer "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ref_id"
+    t.string "title"
+    t.boolean "is_active"
     t.index ["hacker_url"], name: "index_items_on_hacker_url", unique: true
+    t.index ["ref_id"], name: "index_items_on_ref_id", unique: true
     t.index ["url"], name: "index_items_on_url", unique: true
   end
 
