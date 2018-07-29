@@ -4,10 +4,10 @@
       <a class="navbar-brand" href="#">BelongProject</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><%= link_to "Home", root_path %></li>
+      <li class="homePageNav"><%= link_to "Home", root_path %></li>
       <li></li>
       <% if user_signed_in? %>
-      <li><%= link_to "News", items_path %></li>
+      <li class="itemsPageNav"><%= link_to "Items", items_path %></li>
       <% end %>
     </ul>
     <ul class="nav navbar-nav navbar-right">

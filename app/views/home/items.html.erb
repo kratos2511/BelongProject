@@ -1,4 +1,3 @@
-<% if @notice.present? %><p class="alert alert-info"><%= @notice %></p><% end %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -16,10 +15,10 @@
         <td class="text-center"><a class="btn" href="<%= item.hacker_url%>" target="_blank"><%= item.upvotes %></a></td>
         <td class="text-center"><a class="btn" href="<%= item.hacker_url%>" target="_blank"><%= item.comments %></a></td>
         <td>
-           <%- is_read = (item.ai_read.present? && item.ai_read && item.user_id == current_user.id) %>
-            <a class="btn userActionInvoker <%= "disabled" if is_read %>" data-user-action="read" data-item-id="<%= item.id %>" href=""><span class="glyphicon glyphicon-ok"></span> <%= is_read ? "Read" : "Mark as read" %></a>
+           <%- is_read = (item.ai_read.present? && [1, true].include?(item.ai_read)) %>
+            <a class="btn userActionInvoker classRead <%= "disabled" if is_read %>" data-user-action="read" data-item-id="<%= item.id %>"><span class="glyphicon glyphicon-ok"></span> <%= is_read ? "Read" : "Mark as read" %></a>
         </td>
-        <td><a class="btn userActionInvoker" data-user-action="delete" data-item-id="<%= item.id %>" href=""><span class="glyphicon glyphicon-trash"></span></span> Mark Delete</a></td>
+        <td><a class="btn userActionInvoker classDelete" data-user-action="delete" data-item-id="<%= item.id %>"><span class="glyphicon glyphicon-trash"></span></span> Mark Delete</a></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,6 +27,7 @@
 <script type="text/javascript">
 
 $(".userActionInvoker").on('click', function(event){
+  event.preventDefault();
   var re_url = "<%= user_action_path %>";
   var item_id = $(this).data('item-id');
   var item_action = $(this).data('user-action');
@@ -36,8 +36,29 @@ $(".userActionInvoker").on('click', function(event){
     method: "POST",
     url: re_url,
     data: re_data,
-    dataType: "HTML"
+    dataType: "json",
+    success: function(data) {
+        if(data["success"] == true){
+          $(".container").prepend('<div class="alert alert-success alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success!</strong>'+data["notice"]+'</div>');
+          if(data["perform_action"] === "read"){
+            $("tr.item_"+data["item_id"]+" a.classRead").addClass("disabled").html('<span class="glyphicon glyphicon-ok"></span> Read');
+          } else{
+            $("tr.item_"+data["item_id"]).remove();
+          }
+        } else{
+          document.body.scrollTop = 0; // For Safari
+          document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+          $(".container").prepend('<div class="alert alert-danger alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong>'+data["notice"]+'</div>');
+        }
+    },
+    error: function(){
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      $(".container").prepend('<div class="alert alert-danger alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> There was some error in operation.</div>');
+    }
   });
 });
+
+  $(".itemsPageNav").addClass("active");
 
 </script>
