@@ -1,4 +1,4 @@
-
+<% if @notice.present? %><p class="alert alert-info"><%= @notice %></p><% end %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -11,13 +11,33 @@
   </thead>
   <tbody>
     <% @items.each do |item| %>
-      <tr>
-        <td><a href="<%= item.url %>" target="_blank"><%= item.title %></a></td>
-        <td class="text-center"><a href="<%= item.hacker_url%>" target="_blank"><%= item.upvotes %></a></td>
-        <td class="text-center"><a href="<%= item.hacker_url%>" target="_blank"><%= item.comments %></a></td>
-        <td><%= (item.ai_read.blank? || item.ai_read) ? "Mark as read" : "Read" %></td>
-        <td>Mark Delete</td>
+      <tr class="item_<%= item.id %>">
+        <td style="vertical-align: middle;"><a href="<%= item.url %>" target="_blank"><%= item.title %></a></td>
+        <td class="text-center"><a class="btn" href="<%= item.hacker_url%>" target="_blank"><%= item.upvotes %></a></td>
+        <td class="text-center"><a class="btn" href="<%= item.hacker_url%>" target="_blank"><%= item.comments %></a></td>
+        <td>
+           <%- is_read = (item.ai_read.present? && item.ai_read && item.user_id == current_user.id) %>
+            <a class="btn userActionInvoker <%= "disabled" if is_read %>" data-user-action="read" data-item-id="<%= item.id %>" href=""><span class="glyphicon glyphicon-ok"></span> <%= is_read ? "Read" : "Mark as read" %></a>
+        </td>
+        <td><a class="btn userActionInvoker" data-user-action="delete" data-item-id="<%= item.id %>" href=""><span class="glyphicon glyphicon-trash"></span></span> Mark Delete</a></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript">
+
+$(".userActionInvoker").on('click', function(event){
+  var re_url = "<%= user_action_path %>";
+  var item_id = $(this).data('item-id');
+  var item_action = $(this).data('user-action');
+  var re_data = {item: {item_id: item_id, perform_action: item_action}};
+  $.ajax({
+    method: "POST",
+    url: re_url,
+    data: re_data,
+    dataType: "HTML"
+  });
+});
+
+</script>

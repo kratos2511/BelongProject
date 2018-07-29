@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   root to: 'home#index'
   
   get '/items' => 'home#items'
-  
+  post '/user_action' => 'home#user_action'
 end
