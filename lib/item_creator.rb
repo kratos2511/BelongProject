@@ -44,6 +44,8 @@ class ItemCreator
       if item.changed? && item.save
         puts "Item id:#{item.id} ref_id:#{ref_id} has been added/modified"
       else
+        if item.errors.present?
+        end
         puts "Item id:#{item.id} ref_id:#{ref_id} has not been modified" if item.id.present?
         puts "Item for ref_id:#{ref_id} encountered errors" if item.id.blank?
       end

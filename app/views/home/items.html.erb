@@ -1,41 +1,23 @@
 
 <table class="table table-striped">
-    <thead>
+  <thead>
+    <tr>
+      <th style="width: 52%">Title</th>
+      <th style="width: 12%">Upvotes</th>
+      <th style="width: 12%">Comments</th>
+      <th style="width: 12%">Read</th>
+      <th style="width: 12%">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
       <tr>
-        <th style="width: 60%">Firstname</th>
-        <th style="width: 20%">Lastname</th>
-        <th style="width: 20%">Email</th>
+        <td><a href="<%= item.url %>" target="_blank"><%= item.title %></a></td>
+        <td class="text-center"><a href="<%= item.hacker_url%>" target="_blank"><%= item.upvotes %></a></td>
+        <td class="text-center"><a href="<%= item.hacker_url%>" target="_blank"><%= item.comments %></a></td>
+        <td><%= (item.ai_read.blank? || item.ai_read) ? "Mark as read" : "Read" %></td>
+        <td>Mark Delete</td>
       </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm-6">
-      <p>Title is this</p>
-    </div>
-    <div class="col-sm-3">
-      <p>Mark Read</p>
-    </div>
-    <div class="col-sm-3">
-      <p>Delete</p>
-    </div>
-  </div>
-</div>
+    <% end %>
+  </tbody>
+</table>

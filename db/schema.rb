@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_28_163443) do
+ActiveRecord::Schema.define(version: 2018_07_29_071459) do
 
   create_table "action_items", force: :cascade do |t|
     t.integer "user_id"
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 2018_07_28_163443) do
     t.boolean "is_active"
     t.index ["hacker_url"], name: "index_items_on_hacker_url", unique: true
     t.index ["ref_id"], name: "index_items_on_ref_id", unique: true
-    t.index ["url"], name: "index_items_on_url", unique: true
   end
 
   create_table "users", force: :cascade do |t|
