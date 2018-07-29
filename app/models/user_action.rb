@@ -1,4 +1,4 @@
-class ActionItem < ApplicationRecord
+class UserAction < ApplicationRecord
   belongs_to :user
   belongs_to :item
   

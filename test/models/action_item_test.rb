@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ActionItemTest < ActiveSupport::TestCase
+class UserActionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
